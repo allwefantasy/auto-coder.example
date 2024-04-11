@@ -2642,7 +2642,7 @@ if __name__ == "__main__":
 下面是用户的需求：
 
 修改 server.py 中，新增一个 /llm/chat 接口，
-1. 该接口接受一个对象ChatRequest，里面有个字段为 conversations, 是一个叫 Conversation对象的集合，Conversation对象里面有role和content字段。   2. 新建的llm 对象默认的model 为 kimi_8k_chat, 模板为"auto" 3. 记得要先进行 connect_cluster 操作。
+1. 该接口接受一个对象ChatRequest，里面有个字段为 conversations, 是一个叫 Conversation对象的集合，Conversation对象里面有role和content字段。   2. 新建的llm 对象默认的model 为 qianwen_chat, 模板为"auto" 3. 记得要先进行 connect_cluster 操作。
 
 你生成的代码要符合这个格式：
 

@@ -11,8 +11,8 @@ byzerllm.connect_cluster()
 
 app = FastAPI()
 llm = ByzerLLM()
-llm.setup_default_model_name("kimi_8k_chat")
-llm.setup_template("kimi_8k_chat", "auto")
+llm.setup_default_model_name("qianwen_chat")
+llm.setup_template("qianwen_chat", "auto")
 
 class Conversation(BaseModel):
     role: str
