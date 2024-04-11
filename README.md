@@ -27,7 +27,7 @@ byzerllm deploy --pretrained_model_type saas/qianwen_vl \
 --cpus_per_worker 0.001 \
 --gpus_per_worker 0 \
 --num_workers 1 \
---infer_params saas.api_key=xxxxx  saas.model=qwen-vl-max \
+--infer_params saas.api_key=xxxxx  saas.model=qwen-vl-chat-v1 \
 --model qianwen_vl_chat
 ```
 
