@@ -79,7 +79,7 @@ export default Chat;
 ```
 
 ```tsx
-##File: /Users/allwefantasy/projects/auto-coder.example.copy/web/src/App.tsx
+##File: ./web/src/App.tsx
 import React from 'react';
 import './App.css';
 import Chat from './pages/Chat';
