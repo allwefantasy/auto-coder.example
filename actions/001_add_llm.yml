@@ -8,7 +8,7 @@ target_file: /Users/allwefantasy/projects/auto-coder.example.copy/output.txt
 urls: /Users/allwefantasy/projects/byzer-llm/README.md
 
 ## 配置驱动模型。该模型不会用来最终生成代码，仅仅是驱动大模型运转。
-model: haiku_chat
+model: qianwen_chat
 model_max_length: 2000
 model_max_input_length: 6000
 anti_quota_limit: 5
