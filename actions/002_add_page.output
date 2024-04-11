@@ -1,7 +1,7 @@
 根据你提供的需求和代码结构,我生成了一个基本的Chat页面代码,包括Chat.tsx文件和更新后的App.tsx文件。代码如下:
 
 ```tsx
-##File: /Users/allwefantasy/projects/auto-coder.example.copy/web/src/pages/Chat.tsx
+##File: ./web/src/pages/Chat.tsx
 import React, { useState } from 'react';
 
 interface Conversation {

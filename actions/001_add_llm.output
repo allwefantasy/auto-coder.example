@@ -1,7 +1,7 @@
 下面是根据您的需求生成的完整代码：
 
 ```python
-##File: /Users/allwefantasy/projects/auto-coder.example.copy/src/example/server/server.py
+##File: ./src/example/server/server.py
 from fastapi import FastAPI
 from pydantic import BaseModel
 from byzerllm.utils.client import ByzerLLM
