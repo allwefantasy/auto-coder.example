@@ -15,20 +15,6 @@ ray start --head
 Start some LLMs:
 
 ```bash
-byzerllm deploy --pretrained_model_type saas/official_openai \
---cpus_per_worker 0.001 \
---gpus_per_worker 0 \
---num_workers 2 \
---infer_params saas.api_key=xxxx saas.base_url="https://api.moonshot.cn/v1" saas.model=moonshot-v1-32k \
---model kimi_chat
-
-byzerllm deploy --pretrained_model_type saas/qianwen_vl \
---cpus_per_worker 0.001 \
---gpus_per_worker 0 \
---num_workers 1 \
---infer_params saas.api_key=xxxx  saas.model=qwen-vl-max \
---model qianwen_vl_chat
-
 byzerllm deploy --pretrained_model_type saas/qianwen \
 --cpus_per_worker 0.001 \
 --gpus_per_worker 0 \
