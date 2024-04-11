@@ -38,8 +38,7 @@ Please replace the api_key with your own api_key.
 Try to get a copy of this project:
 
 ```bash
-git clone https://github.com/allwefantasy/auto-coder.example.git .
-cp -r auot-coder.example auot-coder.example.copy
+git clone https://github.com/allwefantasy/auto-coder.example.git auto-coder.example.copy
 cd auot-coder.example.copy
 ```
 
