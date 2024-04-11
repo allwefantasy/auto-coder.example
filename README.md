@@ -80,7 +80,9 @@ repeat the above steps for the following files:
 1. actions/002_add_page.yml
 2. actions/003_remove_fastapi_cors.yml
 
-Finally, restart the server and the web, you will see a simple Chatbot in the browser:
+For now, you can visit http://localhost:3000 to see the Chatbot.
+
+![](./images/003.png)
 
 
 
