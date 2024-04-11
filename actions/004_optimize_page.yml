@@ -1,0 +1,25 @@
+## 配置项目路径和类型
+project_type: copilot/ts
+source_dir: /Users/allwefantasy/projects/auto-coder.example.copy
+target_file: /Users/allwefantasy/projects/auto-coder.example.copy/output.txt 
+
+
+## 配置驱动模型。该模型不会用来最终生成代码，仅仅是驱动大模型运转。
+model: qianwen_chat
+model_max_length: 2000
+model_max_input_length: 6000
+anti_quota_limit: 5
+
+## 配置多模态模型，识别图片，然后生成html
+vl_model: qianwen_vl_chat
+image_file: /Users/allwefantasy/projects/auto-coder.example.copy/chat.png
+
+## 自动执行，修改后的代码自动合并，开启human_as_model模式
+## 方便我们可以用web模型来完成最后的代码生成
+execute: true
+auto_merge: true
+human_as_model: true
+
+## 需求描述
+query: >
+  根据html为模板，修改 Chat.tsx，让页面更加美观，其他功能不变。

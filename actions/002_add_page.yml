@@ -1,0 +1,22 @@
+project_type: ts
+source_dir: /Users/allwefantasy/projects/auto-coder.example.copy
+target_file: /Users/allwefantasy/projects/auto-coder.example.copy/output.txt 
+
+## 让大模型参考我们的后端代码
+urls: /Users/allwefantasy/projects/auto-coder.example.copy/src/example/server/server.py
+
+
+
+model: qianwen_chat
+model_max_length: 2000
+model_max_input_length: 6000
+anti_quota_limit: 5
+
+skip_build_index: true
+
+execute: true
+auto_merge: true
+human_as_model: true
+
+query: |
+  参考 server.py 的接口，使用 reactjs+typescript+tailwind 实现一个路径为： web/src/pages/Chat.tsx   的页面。

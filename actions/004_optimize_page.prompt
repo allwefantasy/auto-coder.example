@@ -1,0 +1,21 @@
+## 配置项目路径和类型
+project_type: py
+source_dir: /Users/allwefantasy/projects/auto-coder.example.copy
+target_file: /Users/allwefantasy/projects/auto-coder.example.copy/output.txt 
+
+
+## 配置驱动模型。该模型不会用来最终生成代码，仅仅是驱动大模型运转。
+model: qianwen_chat
+model_max_length: 2000
+model_max_input_length: 6000
+anti_quota_limit: 5
+
+## 自动执行，修改后的代码自动合并，开启human_as_model模式
+## 方便我们可以用web模型来完成最后的代码生成
+execute: true
+auto_merge: true
+human_as_model: true
+
+## 需求描述
+query: >
+  修改 server.py，我想 127.0.0.1:3000 能访问/llm/chat 接口，需要移除 FastAPI 的 CORS，否则会报错。

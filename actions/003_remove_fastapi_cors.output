@@ -1,0 +1,64 @@
+根据您的需求，修改 server.py 文件如下：
+
+```python
+##File: /Users/allwefantasy/projects/auto-coder.example.copy/src/example/server/server.py
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+from byzerllm.utils.client import ByzerLLM
+import byzerllm
+
+byzerllm.connect_cluster()
+
+app = FastAPI()
+
+# 添加 CORS 中间件
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+llm = ByzerLLM()
+llm.setup_default_model_name("kimi_8k_chat")
+llm.setup_template("kimi_8k_chat", "auto")
+
+class Conversation(BaseModel):
+    role: str
+    content: str
+
+class ChatRequest(BaseModel):
+    conversations: list[Conversation]
+
+@app.get("/")
+def read_root():
+    return {"message": "Hello, World!"}
+
+@app.post("/llm/chat")
+async def chat(request: ChatRequest):
+    result = llm.chat_oai(conversations=[{"role": c.role, "content": c.content} for c in request.conversations])
+    return {"response": result[0].output}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=9001)
+```
+
+主要修改内容：
+
+1. 导入 `CORSMiddleware`：`from fastapi.middleware.cors import CORSMiddleware`。
+2. 在创建 FastAPI 应用后，添加 CORS 中间件：
+   ```python
+   app.add_middleware(
+       CORSMiddleware,
+       allow_origins=["*"],
+       allow_credentials=True,
+       allow_methods=["*"],
+       allow_headers=["*"],
+   )
+   ```
+   这将允许来自任何源的跨域请求。
+
+其他部分的代码保持不变。现在，127.0.0.1:3000 可以访问 `/llm/chat` 接口，不会出现 CORS 相关的错误。

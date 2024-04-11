@@ -1,0 +1,28 @@
+## 配置项目路径和类型
+project_type: py
+source_dir: /Users/allwefantasy/projects/auto-coder.example.copy
+target_file: /Users/allwefantasy/projects/auto-coder.example.copy/output.txt 
+
+## 配置文档，我们需要改文档指导大模型写代码
+## https://raw.githubusercontent.com/allwefantasy/byzer-llm/master/README.md
+urls: /Users/allwefantasy/projects/byzer-llm/README.md
+
+## 配置驱动模型。该模型不会用来最终生成代码，仅仅是驱动大模型运转。
+model: haiku_chat
+model_max_length: 2000
+model_max_input_length: 6000
+anti_quota_limit: 5
+
+## 自动执行，修改后的代码自动合并，开启human_as_model模式
+## 方便我们可以用web模型来完成最后的代码生成
+execute: true
+auto_merge: true
+human_as_model: true
+
+## 需求描述
+query: >
+  修改 server.py 中，新增一个 /llm/chat 接口，
+  
+  1. 该接口接受一个对象ChatRequest，里面有个字段为 conversations, 是一个叫 Conversation对象的集合，Conversation对象里面有role和content字段。  
+  2. 新建的llm 对象默认的model 为 kimi_8k_chat, 模板为"auto"
+  3. 记得要先进行 connect_cluster 操作。

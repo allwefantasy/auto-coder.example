@@ -1,0 +1,36 @@
+下面是根据您的需求生成的完整代码：
+
+```python
+##File: /Users/allwefantasy/projects/auto-coder.example.copy/src/example/server/server.py
+from fastapi import FastAPI
+from pydantic import BaseModel
+from byzerllm.utils.client import ByzerLLM
+import byzerllm
+
+byzerllm.connect_cluster()
+
+app = FastAPI()
+llm = ByzerLLM()
+llm.setup_default_model_name("kimi_8k_chat")
+llm.setup_template("kimi_8k_chat", "auto")
+
+class Conversation(BaseModel):
+    role: str
+    content: str
+
+class ChatRequest(BaseModel):
+    conversations: list[Conversation]
+
+@app.get("/")
+def read_root():
+    return {"message": "Hello, World!"}
+
+@app.post("/llm/chat")
+async def chat(request: ChatRequest):
+    result = llm.chat_oai(conversations=[{"role": c.role, "content": c.content} for c in request.conversations])
+    return {"response": result[0].output}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=9001)
+```

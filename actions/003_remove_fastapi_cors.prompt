@@ -1,0 +1,210 @@
+
+下面是一些文件路径以及每个文件对应的源码：
+
+##File: /Users/allwefantasy/projects/auto-coder.example.copy/web/node_modules/flatted/python/flatted.py
+# ISC License
+#
+# Copyright (c) 2018-2021, Andrea Giammarchi, @WebReflection
+#
+# Permission to use, copy, modify, and/or distribute this software for any
+# purpose with or without fee is hereby granted, provided that the above
+# copyright notice and this permission notice appear in all copies.
+#
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+# REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+# AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+# INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+# LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE
+# OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+# PERFORMANCE OF THIS SOFTWARE.
+
+import json as _json
+
+class _Known:
+    def __init__(self):
+        self.key = []
+        self.value = []
+
+class _String:
+    def __init__(self, value):
+        self.value = value
+
+
+def _array_keys(value):
+    keys = []
+    i = 0
+    for _ in value:
+        keys.append(i)
+        i += 1
+    return keys
+
+def _object_keys(value):
+    keys = []
+    for key in value:
+        keys.append(key)
+    return keys
+
+def _is_array(value):
+    return isinstance(value, list) or isinstance(value, tuple)
+
+def _is_object(value):
+    return isinstance(value, dict)
+
+def _is_string(value):
+    return isinstance(value, str)
+
+def _index(known, input, value):
+    input.append(value)
+    index = str(len(input) - 1)
+    known.key.append(value)
+    known.value.append(index)
+    return index
+
+def _loop(keys, input, known, output):
+    for key in keys:
+        value = output[key]
+        if isinstance(value, _String):
+            _ref(key, input[int(value.value)], input, known, output)
+
+    return output
+
+def _ref(key, value, input, known, output):
+    if _is_array(value) and not value in known:
+        known.append(value)
+        value = _loop(_array_keys(value), input, known, value)
+    elif _is_object(value) and not value in known:
+        known.append(value)
+        value = _loop(_object_keys(value), input, known, value)
+
+    output[key] = value
+
+def _relate(known, input, value):
+    if _is_string(value) or _is_array(value) or _is_object(value):
+        try:
+            return known.value[known.key.index(value)]
+        except:
+            return _index(known, input, value)
+
+    return value
+
+def _transform(known, input, value):
+    if _is_array(value):
+        output = []
+        for val in value:
+            output.append(_relate(known, input, val))
+        return output
+
+    if _is_object(value):
+        obj = {}
+        for key in value:
+            obj[key] = _relate(known, input, value[key])
+        return obj
+
+    return value
+
+def _wrap(value):
+    if _is_string(value):
+        return _String(value)
+
+    if _is_array(value):
+        i = 0
+        for val in value:
+            value[i] = _wrap(val)
+            i += 1
+
+    elif _is_object(value):
+        for key in value:
+            value[key] = _wrap(value[key])
+
+    return value
+
+def parse(value, *args, **kwargs):
+    json = _json.loads(value, *args, **kwargs)
+    wrapped = []
+    for value in json:
+        wrapped.append(_wrap(value))
+
+    input = []
+    for value in wrapped:
+        if isinstance(value, _String):
+            input.append(value.value)
+        else:
+            input.append(value)
+
+    value = input[0]
+
+    if _is_array(value):
+        return _loop(_array_keys(value), input, [value], value)
+
+    if _is_object(value):
+        return _loop(_object_keys(value), input, [value], value)
+
+    return value
+
+
+def stringify(value, *args, **kwargs):
+    known = _Known()
+    input = []
+    output = []
+    i = int(_index(known, input, value))
+    while i < len(input):
+        output.append(_transform(known, input, input[i]))
+        i += 1
+    return _json.dumps(output, *args, **kwargs)
+
+
+##File: /Users/allwefantasy/projects/auto-coder.example.copy/src/example/server/server.py
+from fastapi import FastAPI
+from pydantic import BaseModel
+from byzerllm.utils.client import ByzerLLM
+import byzerllm
+
+byzerllm.connect_cluster()
+
+app = FastAPI()
+llm = ByzerLLM()
+llm.setup_default_model_name("kimi_8k_chat")
+llm.setup_template("kimi_8k_chat", "auto")
+
+class Conversation(BaseModel):
+    role: str
+    content: str
+
+class ChatRequest(BaseModel):
+    conversations: list[Conversation]
+
+@app.get("/")
+def read_root():
+    return {"message": "Hello, World!"}
+
+@app.post("/llm/chat")
+async def chat(request: ChatRequest):
+    result = llm.chat_oai(conversations=[{"role": c.role, "content": c.content} for c in request.conversations])
+    return {"response": result[0].output}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=9001)
+
+
+
+
+下面是用户的需求：
+
+修改 server.py，我想 127.0.0.1:3000 能访问/llm/chat 接口，需要移除 FastAPI 的 CORS，否则会报错。
+
+你生成的代码要符合这个格式：
+
+```{lang}
+##File: {FILE_PATH}
+{CODE}
+```    
+
+```{lang}
+##File: {FILE_PATH}
+{CODE}
+```
+
+其中，{lang}是代码的语言，{CODE}是代码的内容, {FILE_PATH} 是文件的路径，他们都在代码块中，请严格按上面的格式进行内容生成。
+     
+请确保每份代码的完整性，而不要只生成修改部分。

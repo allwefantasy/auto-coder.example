@@ -1,0 +1,185 @@
+
+下面是一些文件路径以及每个文件对应的源码：
+
+##File: /Users/allwefantasy/projects/auto-coder.example.copy/src/example/server/server.py
+from fastapi import FastAPI
+from pydantic import BaseModel
+from byzerllm.utils.client import ByzerLLM
+import byzerllm
+
+byzerllm.connect_cluster()
+
+app = FastAPI()
+llm = ByzerLLM()
+llm.setup_default_model_name("kimi_8k_chat")
+llm.setup_template("kimi_8k_chat", "auto")
+
+class Conversation(BaseModel):
+    role: str
+    content: str
+
+class ChatRequest(BaseModel):
+    conversations: list[Conversation]
+
+@app.get("/")
+def read_root():
+    return {"message": "Hello, World!"}
+
+@app.post("/llm/chat")
+async def chat(request: ChatRequest):
+    result = llm.chat_oai(conversations=[{"role": c.role, "content": c.content} for c in request.conversations])
+    return {"response": result[0].output}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=9001)
+
+##File: /Users/allwefantasy/projects/auto-coder.example.copy/web/tailwind.config.ts
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  content: [    
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic":
+          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+      colors: {
+        blue: {
+          500: "#2F80ED",
+        },
+      },
+    },
+  },
+  plugins: [require("@tailwindcss/typography")],
+};
+export default config;
+
+##File: /Users/allwefantasy/projects/auto-coder.example.copy/web/postcss.config.js
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
+
+
+##File: /Users/allwefantasy/projects/auto-coder.example.copy/web/src/index.tsx
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+
+
+##File: /Users/allwefantasy/projects/auto-coder.example.copy/web/src/App.tsx
+import React from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.tsx</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
+  );
+}
+
+export default App;
+
+
+##File: /Users/allwefantasy/projects/auto-coder.example.copy/web/src/App.test.tsx
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import App from './App';
+
+test('renders learn react link', () => {
+  render(<App />);
+  const linkElement = screen.getByText(/learn react/i);
+  expect(linkElement).toBeInTheDocument();
+});
+
+
+##File: /Users/allwefantasy/projects/auto-coder.example.copy/web/src/setupTests.ts
+// jest-dom adds custom jest matchers for asserting on DOM nodes.
+// allows you to do things like:
+// expect(element).toHaveTextContent(/react/i)
+// learn more: https://github.com/testing-library/jest-dom
+import '@testing-library/jest-dom';
+
+
+##File: /Users/allwefantasy/projects/auto-coder.example.copy/web/src/reportWebVitals.ts
+import { ReportHandler } from 'web-vitals';
+
+const reportWebVitals = (onPerfEntry?: ReportHandler) => {
+  if (onPerfEntry && onPerfEntry instanceof Function) {
+    import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
+      getCLS(onPerfEntry);
+      getFID(onPerfEntry);
+      getFCP(onPerfEntry);
+      getLCP(onPerfEntry);
+      getTTFB(onPerfEntry);
+    });
+  }
+};
+
+export default reportWebVitals;
+
+
+##File: /Users/allwefantasy/projects/auto-coder.example.copy/web/src/react-app-env.d.ts
+/// <reference types="react-scripts" />
+
+
+
+
+
+下面是用户的需求：
+
+参考 server.py 的接口，使用 reactjs+typescript+tailwind 实现一个路径为： web/src/pages/Chat.tsx   的页面。 
+
+你生成的代码要符合这个格式：
+
+```{lang}
+##File: {FILE_PATH}
+{CODE}
+```    
+
+```{lang}
+##File: {FILE_PATH}
+{CODE}
+```
+
+其中，{lang}是代码的语言，{CODE}是代码的内容, {FILE_PATH} 是文件的路径，他们都在代码块中，请严格按上面的格式进行内容生成。
+     
+请确保每份代码的完整性，而不要只生成修改部分。
