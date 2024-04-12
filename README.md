@@ -79,6 +79,18 @@ repeat the above steps for the following files:
 1. actions/002_add_page.yml
 2. actions/003_remove_fastapi_cors.yml
 
+After all the above steps, you  still need to modify the web/src/pages/Chat.tsx file:
+
+```typescript
+const response = await fetch('/llm/chat', {
+```
+
+to 
+
+```typescript
+const response = await fetch('http://127.0.0.1:9001/llm/chat', {
+```
+
 For now, you can visit http://localhost:3000 to see the Chatbot.
 
 ![](./images/003.png)
